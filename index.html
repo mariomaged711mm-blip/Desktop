@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Portfolio – 8 Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Raleway:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Jost',sans-serif}
+
+/* ── PAGE SYSTEM ── */
+.page{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity 0.55s ease,transform 0.55s ease;transform:translateX(60px);overflow-y:auto}
+.page.active{opacity:1;pointer-events:all;transform:translateX(0)}
+.page.exit-left{opacity:0;transform:translateX(-60px)}
+
+/* ── NAV ARROWS ── */
+#nav-prev,#nav-next{
+  position:fixed;bottom:32px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  transition:transform 0.2s,background 0.2s,opacity 0.3s;
+  box-shadow:0 4px 20px rgba(0,0,0,0.25);
+}
+#nav-prev{left:32px;background:rgba(255,255,255,0.9);color:#222;}
+#nav-next{right:32px;background:#222;color:#fff;}
+#nav-prev:hover{transform:translateX(-3px) scale(1.05);}
+#nav-next:hover{transform:translateX(3px) scale(1.05);}
+#nav-prev.hidden,#nav-next.hidden{opacity:0;pointer-events:none}
+
+/* PAGE COUNTER */
+#page-counter{
+  position:fixed;bottom:40px;left:50%;transform:translateX(-50%);
+  z-index:9999;font-family:'Jost',sans-serif;font-size:11px;
+  letter-spacing:0.15em;text-transform:uppercase;
+  background:rgba(0,0,0,0.55);color:#fff;
+  padding:5px 14px;border-radius:20px;backdrop-filter:blur(6px);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 1 — RE.VERT HOME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p1{background:#c9b89a;}
+
+.p1-banner{background:#dde0b0;text-align:center;padding:10px;font-size:12px;letter-spacing:0.06em;font-family:'Jost',sans-serif;}
+.p1-nav{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:56px;border-bottom:1px solid rgba(0,0,0,0.07);}
+.p1-nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0.12em;position:absolute;left:50%;transform:translateX(-50%);}
+.p1-nav-links{display:flex;gap:24px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;}
+.p1-hero{
+  position:relative;height:calc(100vh - 96px);
+  background:linear-gradient(160deg,#c9b89a 0%,#a89070 35%,#8a9e7c 65%,#6b8060 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;overflow:hidden;
+}
+.p1-soap{position:absolute;border-radius:6px;box-shadow:8px 12px 30px rgba(0,0,0,0.22);}
+.p1-soap.s1{width:130px;height:120px;background:linear-gradient(135deg,#c8c2b8,#a8a09a);left:14%;top:28%;transform:rotate(-15deg);}
+.p1-soap.s2{width:110px;height:115px;background:linear-gradient(145deg,#7a9b6e,#5a7a52);right:22%;top:10%;transform:rotate(10deg);}
+.p1-soap.s3{width:105px;height:95px;background:linear-gradient(120deg,#d4a86a,#b88848);right:30%;bottom:14%;transform:rotate(-8deg);}
+.p1-soap.s4{width:90px;height:100px;background:linear-gradient(150deg,#b5c4a0,#8fa87a);left:28%;bottom:16%;transform:rotate(20deg);}
+.p1-title{font-family:'Cormorant Garamond',serif;font-size:clamp(80px,13vw,150px);font-weight:300;color:#f0e8d4;text-shadow:0 4px 40px rgba(0,0,0,0.15);line-height:0.9;position:relative;z-index:2;}
+.p1-sub{font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,232,212,0.85);position:relative;z-index:2;}
+.p1-btn{margin-top:6px;padding:12px 32px;border:1.5px solid rgba(240,232,212,0.7);border-radius:100px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#f0e8d4;background:rgba(255,255,255,0.08);cursor:pointer;transition:background 0.3s;position:relative;z-index:2;}
+.p1-btn:hover{background:rgba(255,255,255,0.2);}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 2 — ALICE STYLES (Personal Projects)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p2{background:#f7f5f0;}
+.p2-hero{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+.p2-hero-img{position:relative;overflow:hidden;}
+.p2-hero-img-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#b8a882 0%,#8a7a5e 40%,#6e6049 70%,#4a3e30 100%);
+}
+.p2-hero-img-person{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 55% 70% at 55% 35%,rgba(200,180,150,0.9) 0%,transparent 70%),
+    linear-gradient(180deg,#c8b896 0%,#9a8060 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.p2-camera-icon{font-size:80px;opacity:0.25;position:absolute;bottom:20%;right:15%;}
+.p2-social{position:absolute;left:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;}
+.p2-social span{width:32px;height:32px;background:rgba(0,0,0,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;cursor:pointer;}
+.p2-content{padding:80px 56px;display:flex;flex-direction:column;justify-content:center;background:#fff;}
+.p2-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#999;margin-bottom:8px;}
+.p2-name{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,60px);font-weight:400;line-height:1.1;margin-bottom:6px;}
+.p2-tag{font-size:12px;color:#888;letter-spacing:0.08em;margin-bottom:28px;}
+.p2-body{font-size:13px;line-height:1.8;color:#555;margin-bottom:32px;max-width:380px;}
+.p2-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;}
+.p2-card{background:#f4f2ee;border-radius:6px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:0.1em;color:#888;text-transform:uppercase;}
+.p2-card.dark{background:#2c2c2a;color:#ccc;}
+.p2-footer-row{display:flex;align-items:center;gap:16px;}
+.p2-input{flex:1;border:1px solid #ddd;border-radius:4px;padding:10px 14px;font-family:'Jost',sans-serif;font-size:12px;outline:none;}
+.p2-sub-btn{padding:10px 22px;background:#2c2c2a;color:#fff;border:none;border-radius:4px;font-size:12px;cursor:pointer;letter-spacing:0.06em;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 3 — WEBSITE DESIGN (UX Design)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p3{background:#f0eeea;}
+.p3-nav{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px;border-bottom:1px solid #eee;font-size:12px;letter-spacing:0.08em;}
+.p3-nav-logo{font-family:'Raleway',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.1em;}
+.p3-nav-links{display:flex;gap:28px;text-transform:uppercase;}
+.p3-hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);padding:80px 60px;display:flex;align-items:center;gap:60px;min-height:340px;}
+.p3-hero-text{flex:1;color:#fff;}
+.p3-hero-eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#7ec8e3;margin-bottom:12px;}
+.p3-hero-title{font-family:'Raleway',sans-serif;font-size:clamp(32px,4vw,52px);font-weight:700;line-height:1.15;margin-bottom:20px;}
+.p3-hero-body{font-size:13px;line-height:1.8;color:rgba(255,255,255,0.7);max-width:420px;}
+.p3-hero-img{width:280px;height:180px;background:rgba(255,255,255,0.08);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.1);}
+.p3-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#fff;border-top:1px solid #eee;}
+.p3-card{padding:28px;border-right:1px solid #eee;transition:background 0.2s;}
+.p3-card:last-child{border-right:none;}
+.p3-card:hover{background:#f8f7f5;}
+.p3-card-img{width:100%;aspect-ratio:16/9;border-radius:4px;margin-bottom:14px;background:linear-gradient(135deg,#ddd,#bbb);}
+.p3-card-img.c1{background:linear-gradient(135deg,#ffd89b,#19547b);}
+.p3-card-img.c2{background:linear-gradient(135deg,#a8edea,#fed6e3);}
+.p3-card-img.c3{background:linear-gradient(135deg,#d299c2,#fef9d7);}
+.p3-card-label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#999;margin-bottom:6px;}
+.p3-card-title{font-family:'Raleway',sans-serif;font-size:15px;font-weight:600;margin-bottom:6px;}
+.p3-card-body{font-size:12px;color:#777;line-height:1.6;}
+.p3-secondary{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#fff;border-top:1px solid #eee;border-bottom:1px solid #eee;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 4 — WEBSITE DEV (Dark Tech)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p4{background:#0a0a0f;}
+.p4-banner{background:#ff6b35;text-align:center;padding:8px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#fff;font-family:'Space Mono',monospace;}
+.p4-nav{background:#0d0d14;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.p4-nav-logo{font-family:'Space Mono',monospace;font-size:16px;color:#fff;letter-spacing:0.1em;}
+.p4-nav-links{display:flex;gap:28px;font-size:12px;letter-spacing:0.08em;color:rgba(255,255,255,0.6);text-transform:uppercase;}
+.p4-nav-cta{background:#7c4dff;color:#fff;padding:8px 20px;border-radius:4px;font-size:11px;letter-spacing:0.1em;cursor:pointer;border:none;text-transform:uppercase;}
+.p4-hero{
+  background:linear-gradient(135deg,#0d0d20 0%,#1a1a35 50%,#0d0d20 100%);
+  min-height:420px;display:flex;align-items:center;padding:80px 60px;position:relative;overflow:hidden;
+}
+.p4-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(124,77,255,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(124,77,255,0.08) 1px,transparent 1px);background-size:40px 40px;}
+.p4-hero-text{position:relative;z-index:2;max-width:560px;}
+.p4-hero-eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#7c4dff;margin-bottom:16px;font-family:'Space Mono',monospace;}
+.p4-hero-title{font-family:'Raleway',sans-serif;font-size:clamp(36px,5vw,60px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:20px;}
+.p4-hero-body{font-size:13px;line-height:1.8;color:rgba(255,255,255,0.55);margin-bottom:28px;max-width:440px;}
+.p4-cta-btn{background:#7c4dff;color:#fff;padding:13px 32px;border-radius:6px;font-size:12px;letter-spacing:0.1em;border:none;cursor:pointer;text-transform:uppercase;}
+.p4-hero-deco{position:absolute;right:8%;top:50%;transform:translateY(-50%);display:grid;grid-template-columns:1fr 1fr;gap:16px;z-index:2;}
+.p4-deco-diamond{width:80px;height:80px;background:transparent;border:2px solid rgba(124,77,255,0.4);transform:rotate(45deg);display:flex;align-items:center;justify-content:center;}
+.p4-deco-diamond.filled{background:rgba(124,77,255,0.15);}
+.p4-section{padding:60px;background:#0d0d14;border-top:1px solid rgba(255,255,255,0.05);}
+.p4-section-title{font-family:'Raleway',sans-serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:8px;}
+.p4-section-body{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:520px;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 5 — SOFTWARE DEV
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p5{background:#f0f4ff;}
+.p5-nav{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:56px;border-bottom:1px solid #e8eaf0;font-size:12px;}
+.p5-nav-logo{font-family:'Space Mono',monospace;font-size:13px;display:flex;align-items:center;gap:8px;}
+.p5-nav-links{display:flex;gap:24px;letter-spacing:0.06em;text-transform:uppercase;}
+.p5-nav-links a{text-decoration:none;color:#444;}
+.p5-hero{background:linear-gradient(135deg,#0a0a1a 0%,#1a2040 100%);padding:70px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;min-height:360px;}
+.p5-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,100,255,0.15);border:1px solid rgba(0,100,255,0.3);color:#5599ff;padding:6px 14px;border-radius:4px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;}
+.p5-badge-x{color:#5599ff;font-size:18px;font-weight:700;}
+.p5-hero-title{font-family:'Raleway',sans-serif;font-size:clamp(32px,4vw,50px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:16px;}
+.p5-hero-title span{color:#3b82f6;}
+.p5-hero-body{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:24px;}
+.p5-hero-btn{background:#3b82f6;color:#fff;padding:12px 28px;border-radius:4px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;}
+.p5-hero-visual{
+  background:linear-gradient(135deg,#0a2040 0%,#1a4080 100%);
+  border-radius:8px;aspect-ratio:16/10;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.p5-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(59,130,246,0.3) 1px,transparent 1px);background-size:20px 20px;}
+.p5-about{padding:60px;background:#fff;border-top:3px solid #3b82f6;}
+.p5-about-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#3b82f6;margin-bottom:10px;}
+.p5-about-title{font-family:'Raleway',sans-serif;font-size:28px;font-weight:700;color:#1a1a2e;margin-bottom:20px;}
+.p5-about-grid{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start;}
+.p5-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#1a4080);flex-shrink:0;}
+.p5-about-body{font-size:13px;color:#555;line-height:1.8;}
+.p5-about-btn{display:inline-block;margin-top:16px;background:#3b82f6;color:#fff;padding:10px 24px;border-radius:4px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 6 — DATABASE DEV (Workflow Unleashed)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p6{background:#f9f8f5;}
+.p6-nav{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px;border-bottom:1px solid #eee;font-size:12px;letter-spacing:0.06em;}
+.p6-hero{background:#fff;text-align:center;padding:70px 40px 40px;}
+.p6-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,58px);font-weight:400;line-height:1.15;margin-bottom:8px;color:#1a1a1a;}
+.p6-hero-sub{font-size:13px;color:#888;letter-spacing:0.08em;margin-bottom:24px;}
+.p6-hero-btn{background:#1a1a1a;color:#fff;padding:12px 30px;border-radius:4px;font-size:12px;letter-spacing:0.08em;border:none;cursor:pointer;text-transform:uppercase;}
+.p6-img{width:100%;max-height:300px;object-fit:cover;background:linear-gradient(135deg,#2c3e50,#3498db);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:40px;}
+.p6-img-placeholder{width:100%;height:280px;background:linear-gradient(135deg,#3d5a80,#98c1d9,#e0fbfc);display:flex;align-items:center;justify-content:center;}
+.p6-img-inner{width:60%;aspect-ratio:16/9;background:rgba(255,255,255,0.15);border-radius:8px;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.2);}
+.p6-about{padding:60px 80px;background:#fff;border-top:1px solid #eee;}
+.p6-about-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:400;margin-bottom:20px;}
+.p6-about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+.p6-about-body{font-size:13px;color:#666;line-height:1.8;}
+.p6-tag{display:inline-block;background:#f0eeea;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;margin:4px;letter-spacing:0.06em;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 7 — ABOUT ME (Re.vert variant)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p7{background:#b8a882;}
+.p7-banner{background:#dde0b0;text-align:center;padding:9px;font-size:11px;letter-spacing:0.06em;}
+.p7-banner a{color:#555;letter-spacing:0.1em;text-decoration:underline;}
+.p7-nav{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:56px;border-bottom:1px solid rgba(0,0,0,0.07);}
+.p7-nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0.12em;position:absolute;left:50%;transform:translateX(-50%);}
+.p7-hero{
+  position:relative;height:calc(100vh - 96px);
+  background:linear-gradient(145deg,#d4a86a 0%,#b88848 30%,#8a9e7c 65%,#6b8060 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;overflow:hidden;
+}
+.p7-soap{position:absolute;border-radius:6px;box-shadow:8px 12px 30px rgba(0,0,0,0.22);}
+.p7-soap.s1{width:120px;height:105px;background:linear-gradient(120deg,#d4a86a,#b88848);left:12%;top:30%;transform:rotate(-12deg);}
+.p7-soap.s2{width:100px;height:110px;background:linear-gradient(145deg,#9b8260,#7a6245);right:18%;top:15%;transform:rotate(8deg);}
+.p7-soap.s3{width:110px;height:90px;background:linear-gradient(130deg,#c8c2b8,#a8a09a);right:28%;bottom:18%;transform:rotate(-6deg);}
+.p7-title{font-family:'Cormorant Garamond',serif;font-size:clamp(70px,12vw,140px);font-weight:300;color:#f0e8d4;text-shadow:0 4px 40px rgba(0,0,0,0.15);line-height:0.9;position:relative;z-index:2;}
+.p7-sub{font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,232,212,0.85);position:relative;z-index:2;}
+.p7-btn{margin-top:6px;padding:12px 32px;border:1.5px solid rgba(240,232,212,0.7);border-radius:100px;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#f0e8d4;background:rgba(255,255,255,0.08);cursor:pointer;position:relative;z-index:2;transition:background 0.3s;}
+.p7-btn:hover{background:rgba(255,255,255,0.2);}
+.p7-indicator{position:absolute;bottom:24px;right:24px;width:36px;height:36px;background:rgba(0,0,0,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;z-index:5;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 8 — CONTACT ME (Royal Oaks)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#p8{background:#0d1117;}
+.p8-nav{background:#0d1117;display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:56px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.p8-nav-logo{font-family:'Space Mono',monospace;color:#fff;font-size:14px;display:flex;align-items:center;gap:6px;}
+.p8-nav-dot{width:8px;height:8px;background:#00d4aa;border-radius:50%;}
+.p8-nav-links{display:flex;gap:24px;font-size:11px;letter-spacing:0.08em;color:rgba(255,255,255,0.5);text-transform:uppercase;}
+.p8-hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 56px);}
+.p8-hero-left{
+  background:linear-gradient(155deg,#1a2744 0%,#0d1a33 60%,#051020 100%);
+  padding:60px 50px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;
+}
+.p8-building-lines{position:absolute;inset:0;opacity:0.15;}
+.p8-building-lines::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(100,160,255,0.3) 0px,rgba(100,160,255,0.3) 1px,transparent 1px,transparent 40px);}
+.p8-building-lines::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(100,160,255,0.15) 0px,rgba(100,160,255,0.15) 1px,transparent 1px,transparent 60px);}
+.p8-hero-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#00d4aa;margin-bottom:14px;font-family:'Space Mono',monospace;}
+.p8-hero-title{font-family:'Raleway',sans-serif;font-size:clamp(36px,5vw,58px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:16px;}
+.p8-hero-title .accent{color:#00d4aa;}
+.p8-hero-body{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.8;max-width:360px;margin-bottom:30px;}
+.p8-hero-right{background:#fff;padding:50px 44px;display:flex;flex-direction:column;justify-content:flex-start;overflow-y:auto;}
+.p8-form-title{font-family:'Raleway',sans-serif;font-size:22px;font-weight:700;color:#0d1117;margin-bottom:24px;}
+.p8-field{margin-bottom:16px;}
+.p8-field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:6px;}
+.p8-field input,.p8-field select,.p8-field textarea{width:100%;border:1px solid #ddd;border-radius:4px;padding:11px 14px;font-family:'Jost',sans-serif;font-size:13px;color:#333;outline:none;transition:border-color 0.2s;}
+.p8-field input:focus,.p8-field select:focus,.p8-field textarea:focus{border-color:#00d4aa;}
+.p8-field textarea{height:90px;resize:vertical;}
+.p8-submit{width:100%;background:#00d4aa;color:#0d1117;border:none;padding:14px;border-radius:4px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:background 0.2s;}
+.p8-submit:hover{background:#00bfa0;}
+.p8-info{padding:32px 44px;background:#f8f9fa;border-top:1px solid #eee;}
+.p8-info-title{font-family:'Raleway',sans-serif;font-size:18px;font-weight:700;color:#0d1117;margin-bottom:16px;}
+.p8-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.p8-info-item label{display:block;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin-bottom:4px;}
+.p8-info-item p{font-size:13px;color:#333;}
+
+/* UTILS */
+a{text-decoration:none;color:inherit;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PAGE 1: RE.VERT HOME ══════════════ -->
+<div class="page active" id="p1">
+  <div class="p1-banner">Free shipping on all international orders over $35 &nbsp;<a href="#">Shop Now</a> 🌿</div>
+  <nav class="p1-nav">
+    <div class="p1-nav-links"><a href="#">Menu</a></div>
+    <div class="p1-nav-logo">R.V</div>
+    <div class="p1-nav-links"><a href="#">Cart (0)</a>&nbsp;&nbsp;<a href="#">Log In</a></div>
+  </nav>
+  <div class="p1-hero">
+    <div class="p1-soap s1"></div>
+    <div class="p1-soap s2"></div>
+    <div class="p1-soap s3"></div>
+    <div class="p1-soap s4"></div>
+    <h1 class="p1-title">Re.vert</h1>
+    <p class="p1-sub">Home Essentials for Sustainable Living</p>
+    <button class="p1-btn">Shop Now</button>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 2: PERSONAL PROJECTS ══════════════ -->
+<div class="page" id="p2">
+  <div class="p2-hero">
+    <div class="p2-hero-img">
+      <div class="p2-hero-img-bg"></div>
+      <div class="p2-hero-img-person">
+        <div class="p2-camera-icon">📷</div>
+      </div>
+      <div class="p2-social">
+        <span>f</span><span>in</span><span>tw</span><span>ig</span>
+      </div>
+    </div>
+    <div class="p2-content">
+      <p class="p2-label">Portfolio</p>
+      <h1 class="p2-name">Alice Styles</h1>
+      <p class="p2-tag">by Alice / D.I.Styled Up</p>
+      <p class="p2-body">A creative portfolio showcasing personal projects across photography, styling, and digital content creation. Each project reflects a commitment to authentic visual storytelling and intentional design. Browse the collection and get in touch for collaborations.</p>
+      <div class="p2-grid">
+        <div class="p2-card">Photography</div>
+        <div class="p2-card dark">Styling</div>
+        <div class="p2-card dark">Editorial</div>
+        <div class="p2-card">Direction</div>
+      </div>
+      <div class="p2-footer-row">
+        <input class="p2-input" type="email" placeholder="your@email.com"/>
+        <button class="p2-sub-btn">Subscribe</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 3: WEBSITE DESIGN ══════════════ -->
+<div class="page" id="p3">
+  <nav class="p3-nav">
+    <div class="p3-nav-logo">STUDIO</div>
+    <div class="p3-nav-links"><a href="#">Work</a><a href="#">About</a><a href="#">Services</a><a href="#">Contact</a></div>
+    <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;">Get Quote</div>
+  </nav>
+  <div class="p3-hero">
+    <div class="p3-hero-text">
+      <p class="p3-hero-eyebrow">Design Agency</p>
+      <h1 class="p3-hero-title">Industry of User<br/>Experience Design</h1>
+      <p class="p3-hero-body">We craft digital experiences that connect brands to people. Strategic UX, refined interfaces, and purposeful design systems for forward-thinking organisations.</p>
+    </div>
+    <div class="p3-hero-img">
+      <div style="color:rgba(255,255,255,0.15);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;">Featured Work →</div>
+    </div>
+  </div>
+  <div class="p3-cards">
+    <div class="p3-card">
+      <div class="p3-card-img c1"></div>
+      <p class="p3-card-label">A Year in Color</p>
+      <p class="p3-card-title">Why Visual Design Still Leads</p>
+      <p class="p3-card-body">Exploring the role of color theory in driving conversion and emotional response.</p>
+    </div>
+    <div class="p3-card">
+      <div class="p3-card-img c2"></div>
+      <p class="p3-card-label">UX Strategy</p>
+      <p class="p3-card-title">Why Shatter Areas Matter</p>
+      <p class="p3-card-body">Breaking down complex user flows into intuitive, task-focused experiences.</p>
+    </div>
+    <div class="p3-card">
+      <div class="p3-card-img c3"></div>
+      <p class="p3-card-label">The Importance</p>
+      <p class="p3-card-title">Design Thinking in Practice</p>
+      <p class="p3-card-body">How iterative prototyping separates good products from great ones.</p>
+    </div>
+  </div>
+  <div class="p3-secondary">
+    <div class="p3-card"><div class="p3-card-img" style="background:linear-gradient(135deg,#667eea,#764ba2)"></div><p class="p3-card-label">Idea to Build</p><p class="p3-card-title">Brand Identity</p></div>
+    <div class="p3-card"><div class="p3-card-img" style="background:linear-gradient(135deg,#f093fb,#f5576c)"></div><p class="p3-card-label">The Finest</p><p class="p3-card-title">Motion Design</p></div>
+    <div class="p3-card"><div class="p3-card-img" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"></div><p class="p3-card-label">Stay Free</p><p class="p3-card-title">Product Launches</p></div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 4: WEBSITE DEV ══════════════ -->
+<div class="page" id="p4">
+  <div class="p4-banner">Premium Development Solutions — Limited Availability Q3 2026</div>
+  <nav class="p4-nav">
+    <div class="p4-nav-logo">◆ Dusk Zero</div>
+    <div class="p4-nav-links"><a href="#">Services</a><a href="#">Portfolio</a><a href="#">Pricing</a><a href="#">Blog</a></div>
+    <button class="p4-nav-cta">Start Project</button>
+  </nav>
+  <div class="p4-hero">
+    <div class="p4-grid-lines"></div>
+    <div class="p4-hero-text">
+      <p class="p4-hero-eyebrow">// Premium Business Solutions</p>
+      <h1 class="p4-hero-title">Driving Business<br/>Forward</h1>
+      <p class="p4-hero-body">We engineer high-performance web platforms that scale with your ambitions. From architecture to deployment — done right, the first time.</p>
+      <button class="p4-cta-btn">Explore Services</button>
+    </div>
+    <div class="p4-hero-deco">
+      <div class="p4-deco-diamond filled"></div>
+      <div class="p4-deco-diamond"></div>
+      <div class="p4-deco-diamond"></div>
+      <div class="p4-deco-diamond filled"></div>
+    </div>
+  </div>
+  <div class="p4-section">
+    <p style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#7c4dff;margin-bottom:10px;font-family:'Space Mono',monospace;">// Who we are</p>
+    <p class="p4-section-title">About Our Vision<br/>and Mission</p>
+    <p class="p4-section-body">We believe technology should remove friction, not add it. Our mission is to build digital infrastructure that lets your business move at the speed of thought — reliable, scalable, and built to last.</p>
+    <div style="display:flex;gap:16px;margin-top:28px;">
+      <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:24px;">
+        <p style="font-size:28px;font-weight:700;color:#7c4dff;font-family:'Space Mono',monospace;">98%</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;letter-spacing:0.06em;">Client Retention</p>
+      </div>
+      <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:24px;">
+        <p style="font-size:28px;font-weight:700;color:#7c4dff;font-family:'Space Mono',monospace;">200+</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;letter-spacing:0.06em;">Projects Delivered</p>
+      </div>
+      <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:24px;">
+        <p style="font-size:28px;font-weight:700;color:#7c4dff;font-family:'Space Mono',monospace;">5★</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;letter-spacing:0.06em;">Average Rating</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 5: SOFTWARE DEV ══════════════ -->
+<div class="page" id="p5">
+  <nav class="p5-nav">
+    <div class="p5-nav-logo"><span style="color:#3b82f6;font-size:18px;font-weight:700;">✕</span> LATTIS</div>
+    <div class="p5-nav-links"><a href="#">Home</a><a href="#">Solutions</a><a href="#">Pricing</a><a href="#">Contact</a></div>
+    <div style="font-size:11px;letter-spacing:0.1em;color:#888;">EN &nbsp;|&nbsp; Log In</div>
+  </nav>
+  <div class="p5-hero">
+    <div>
+      <div class="p5-badge"><span class="p5-badge-x">✕</span> Software Solutions</div>
+      <h1 class="p5-hero-title">Driving<br/><span>Efficiency</span></h1>
+      <p class="p5-hero-body">Empowering businesses with cutting-edge software that automates workflows, eliminates bottlenecks, and delivers measurable results from day one.</p>
+      <button class="p5-hero-btn">Find Out More</button>
+    </div>
+    <div class="p5-hero-visual">
+      <div class="p5-dots"></div>
+      <div style="position:relative;z-index:2;color:rgba(255,255,255,0.15);font-size:13px;letter-spacing:0.1em;">DATA VISUALISATION</div>
+    </div>
+  </div>
+  <div class="p5-about" style="padding:50px 60px;">
+    <p class="p5-about-label">About</p>
+    <p class="p5-about-title">Who We Are</p>
+    <div class="p5-about-grid">
+      <div class="p5-avatar"></div>
+      <div>
+        <p class="p5-about-body">We are a team of experienced software engineers and strategists dedicated to solving real business challenges. Our platform-agnostic approach means we build for your stack, not ours — ensuring seamless integration with your existing tools and infrastructure. From MVPs to enterprise-scale systems, we deliver on time and on spec.</p>
+        <button class="p5-about-btn">Learn More</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 6: DATABASE DEV ══════════════ -->
+<div class="page" id="p6">
+  <nav class="p6-nav">
+    <div style="font-family:'Jost',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.06em;">FLOWBASE</div>
+    <div style="display:flex;gap:28px;text-transform:uppercase;font-size:11px;letter-spacing:0.1em;color:#666;"><a href="#">Products</a><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Blog</a></div>
+    <div style="font-size:11px;color:#555;letter-spacing:0.06em;">Login &nbsp;•&nbsp; Sign Up</div>
+  </nav>
+  <div class="p6-hero">
+    <h1 class="p6-hero-title">Workflow Unleashed</h1>
+    <p class="p6-hero-sub">BPT Tables Pro — Database-Powered Automation</p>
+    <button class="p6-hero-btn">Start Free Trial</button>
+  </div>
+  <div class="p6-img-placeholder">
+    <div class="p6-img-inner"></div>
+  </div>
+  <div class="p6-about">
+    <h2 class="p6-about-title">About Us</h2>
+    <div class="p6-about-grid">
+      <div>
+        <p class="p6-about-body">Flowbase was born from a simple frustration: powerful database tools were locked behind complexity and steep learning curves. We built Workflow Unleashed to change that — giving teams of any size the ability to automate data pipelines, manage records, and trigger workflows without writing a single line of code.</p>
+        <div style="margin-top:20px;">
+          <span class="p6-tag">Automation</span><span class="p6-tag">No-Code</span><span class="p6-tag">Databases</span><span class="p6-tag">APIs</span><span class="p6-tag">Analytics</span>
+        </div>
+      </div>
+      <div>
+        <p class="p6-about-body">Our technology connects seamlessly to the tools your team already uses — from Airtable to PostgreSQL, from Zapier to custom REST endpoints. With real-time sync, version history, and role-based access, your data is always accurate, available, and secure.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;">
+          <div style="background:#f4f2ee;border-radius:6px;padding:16px;"><p style="font-size:22px;font-weight:600;color:#1a1a1a;">50k+</p><p style="font-size:11px;color:#999;letter-spacing:0.06em;">Active Users</p></div>
+          <div style="background:#f4f2ee;border-radius:6px;padding:16px;"><p style="font-size:22px;font-weight:600;color:#1a1a1a;">99.9%</p><p style="font-size:11px;color:#999;letter-spacing:0.06em;">Uptime SLA</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 7: ABOUT ME ══════════════ -->
+<div class="page" id="p7">
+  <div class="p7-banner">Find out more about Re.vert &nbsp;<a href="#">Page 8 →</a></div>
+  <nav class="p7-nav" style="position:relative;">
+    <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">Menu</div>
+    <div class="p7-nav-logo">R.V</div>
+    <div style="display:flex;gap:20px;font-size:12px;letter-spacing:0.08em;"><a href="#">Cart (0)</a><a href="#">Log In</a></div>
+  </nav>
+  <div class="p7-hero">
+    <div class="p7-soap s1"></div>
+    <div class="p7-soap s2"></div>
+    <div class="p7-soap s3"></div>
+    <h1 class="p7-title">Re.vert</h1>
+    <p class="p7-sub">Home Essentials for Sustainable Living</p>
+    <button class="p7-btn">Explore</button>
+    <div class="p7-indicator">▶</div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 8: CONTACT / ROYAL OAKS ══════════════ -->
+<div class="page" id="p8">
+  <nav class="p8-nav">
+    <div class="p8-nav-logo"><div class="p8-nav-dot"></div>Royal Oaks</div>
+    <div class="p8-nav-links"><a href="#">Properties</a><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a></div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.08em;">+44 20 7946 0123</div>
+  </nav>
+  <div class="p8-hero">
+    <div class="p8-hero-left">
+      <div class="p8-building-lines"></div>
+      <p class="p8-hero-label">// Premium Real Estate</p>
+      <h1 class="p8-hero-title">Your New<br/><span class="accent">Home Awaits</span></h1>
+      <p class="p8-hero-body">Discover exceptional properties across London's most sought-after neighbourhoods. From sleek city apartments to stately family homes — Royal Oaks connects you with the residence that defines your lifestyle.</p>
+      <div style="display:flex;gap:32px;margin-top:20px;">
+        <div><p style="font-size:22px;font-weight:700;color:#fff;font-family:'Raleway',sans-serif;">320+</p><p style="font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;">Listings</p></div>
+        <div><p style="font-size:22px;font-weight:700;color:#fff;font-family:'Raleway',sans-serif;">£2.4B</p><p style="font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;">Sold</p></div>
+        <div><p style="font-size:22px;font-weight:700;color:#fff;font-family:'Raleway',sans-serif;">98%</p><p style="font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;">Satisfaction</p></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;">
+      <div class="p8-hero-right" style="flex:1;">
+        <p class="p8-form-title">Contact Us</p>
+        <div class="p8-field"><label>Full Name</label><input type="text" placeholder="Jane Smith"/></div>
+        <div class="p8-field"><label>Email Address</label><input type="email" placeholder="jane@example.com"/></div>
+        <div class="p8-field"><label>Phone</label><input type="tel" placeholder="+44 7700 900000"/></div>
+        <div class="p8-field"><label>Budget Range</label>
+          <select><option>£500k – £1M</option><option>£1M – £2M</option><option>£2M – £5M</option><option>£5M+</option></select>
+        </div>
+        <div class="p8-field"><label>Message</label><textarea placeholder="Tell us what you're looking for…"></textarea></div>
+        <button class="p8-submit">Send Enquiry →</button>
+      </div>
+      <div class="p8-info">
+        <p class="p8-info-title">Property Info</p>
+        <div class="p8-info-grid">
+          <div class="p8-info-item"><label>Location</label><p>Mayfair, London</p></div>
+          <div class="p8-info-item"><label>Status</label><p>Available Now</p></div>
+          <div class="p8-info-item"><label>Type</label><p>Residential</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NAVIGATION CONTROLS ── -->
+<button id="nav-prev" class="hidden" onclick="goTo(current-1)">←</button>
+<div id="page-counter">1 / 8</div>
+<button id="nav-next" onclick="goTo(current+1)">→</button>
+
+<script>
+const pages = document.querySelectorAll('.page');
+let current = 0;
+
+function goTo(n) {
+  if (n < 0 || n >= pages.length) return;
+  pages[current].classList.remove('active');
+  pages[current].classList.add('exit-left');
+  setTimeout(() => pages[current].classList.remove('exit-left'), 600);
+  current = n;
+  pages[current].classList.add('active');
+  // scroll to top of new page
+  pages[current].scrollTop = 0;
+  // update counter
+  document.getElementById('page-counter').textContent = (current+1) + ' / ' + pages.length;
+  // update buttons
+  document.getElementById('nav-prev').classList.toggle('hidden', current === 0);
+  document.getElementById('nav-next').classList.toggle('hidden', current === pages.length - 1);
+  // adapt button colors per page bg
+  const darkPages = [3,4,6,7]; // 0-indexed
+  const prev = document.getElementById('nav-prev');
+  const next = document.getElementById('nav-next');
+  if (darkPages.includes(current)) {
+    next.style.background = '#fff'; next.style.color = '#111';
+    prev.style.background = 'rgba(255,255,255,0.15)'; prev.style.color = '#fff';
+  } else {
+    next.style.background = '#222'; next.style.color = '#fff';
+    prev.style.background = 'rgba(255,255,255,0.9)'; prev.style.color = '#222';
+  }
+}
+
+// keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current+1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(current-1);
+});
+</script>
+</body>
+</html>
